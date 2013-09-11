@@ -1,0 +1,21 @@
+--- origsrc/xfce4-screenshooter-1.8.1/Makefile.am	2012-05-02 13:20:11.000000000 -0500
++++ src/xfce4-screenshooter-1.8.1/Makefile.am	2013-09-11 17:21:47.768112900 -0500
+@@ -132,14 +132,16 @@ panel_plugin_libscreenshooterplugin_la_C
+ 	@SOUP_CFLAGS@
+ 
+ panel_plugin_libscreenshooterplugin_la_LDFLAGS = \
++	-module -avoid-version -no-undefined
++
++panel_plugin_libscreenshooterplugin_la_LIBADD = \
++	lib/libscreenshooter.la \
+ 	@EXO_LIBS@ \
+ 	@LIBXFCE4PANEL_LIBS@ \
+ 	@GTHREAD_LIBS@ \
+ 	@SOUP_LIBS@ \
+ 	@LIBXFCE4UI_LIBS@
+ 
+-panel_plugin_libscreenshooterplugin_la_LIBADD = lib/libscreenshooter.la
+-
+ panel_plugin_libscreenshooterplugin_la_SOURCES = \
+ 	panel-plugin/screenshooter-plugin.c
+ 

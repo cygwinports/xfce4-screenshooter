@@ -2,7 +2,7 @@ inherit xfce4
 
 NAME="xfce4-screenshooter"
 VERSION=1.8.1
-RELEASE=1
+RELEASE=2
 CATEGORY="Xfce"
 SUMMARY="Xfce screenshot program and panel plugin"
 DESCRIPTION="This application allows you to capture the entire screen, the
@@ -10,3 +10,5 @@ active window or a selected region. You can set the delay that elapses before
 the screenshot is taken and the action that will be done with the screenshot:
 save it to a PNG file, copy it to the clipboard, open it using another
 application, or host it on ZimageZ, a free online image hosting service."
+
+PATCH_URI="1.8.1-plugin-ldflags.patch"
