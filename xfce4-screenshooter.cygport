@@ -1,14 +1,44 @@
 inherit xfce4
 
 NAME="xfce4-screenshooter"
-VERSION=1.8.1
-RELEASE=2
+VERSION=1.8.2
+RELEASE=1
 CATEGORY="Xfce"
-SUMMARY="Xfce screenshot program and panel plugin"
+SUMMARY="Xfce screenshot program"
 DESCRIPTION="This application allows you to capture the entire screen, the
 active window or a selected region. You can set the delay that elapses before
 the screenshot is taken and the action that will be done with the screenshot:
 save it to a PNG file, copy it to the clipboard, open it using another
 application, or host it on ZimageZ, a free online image hosting service."
 
-PATCH_URI="1.8.1-plugin-ldflags.patch"
+PKG_NAMES="${NAME} ${NAME}-common ${NAME}-plugin"
+xfce4_screenshooter_REQUIRES="${NAME}-common"
+xfce4_screenshooter_CONTENTS="
+	usr/bin/${NAME}.exe
+	usr/share/appdata/${NAME}.appdata.xml
+	usr/share/applications/${NAME}.desktop
+	usr/share/man/man1/${NAME}.1*
+"
+xfce4_screenshooter_common_SUMMARY="${SUMMARY} (runtime data)"
+xfce4_screenshooter_common_CONTENTS="
+	etc/postinstall/${NAME}.sh
+	usr/share/doc/${NAME}/
+	usr/share/icons/hicolor/*/apps/applets-screenshooter.*
+	usr/share/locale/*/LC_MESSAGES/${NAME}.mo
+"
+xfce4_screenshooter_plugin_SUMMARY=${SUMMARY/program/panel plugin}
+xfce4_screenshooter_plugin_REQUIRES="${NAME}-common"
+xfce4_screenshooter_plugin_CONTENTS="
+	usr/lib/xfce4/panel/plugins/cygscreenshooterplugin.dll
+	usr/share/xfce4/panel/plugins/screenshooter.desktop
+"
+
+src_install() {
+	cd ${B}
+	cyginstall
+
+	check_prog_req desktop-file-edit desktop-file-utils
+	# do not show on desktops with their own screenshot utilities
+	desktop-file-edit --add-not-show-in="GNOME;KDE" \
+		${D}/usr/share/applications/${NAME}.desktop
+}
